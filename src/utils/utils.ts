@@ -1,5 +1,4 @@
-import {DestinyMembershipInfo, UserInfoCard} from "../types/UserInfoCard.type";
-import { DestinyMembership } from "../types/DestinyMembership.enum";
+import {DestinyMembershipInfo, UserInfoCard} from '../types/UserInfoCard.type';
 
 export const parseDisplayName = (displayName: string): [string, string] => {
     const parsedName = displayName.split('#')
@@ -12,19 +11,27 @@ export const SerializeUserInfo = (data: any): UserInfoCard => {
     for (const membership of data.destinyMemberships) {
         const newMembership: DestinyMembershipInfo = {
             iconPath: membership.iconPath,
-            crossSaveOverride: Object.values(DestinyMembership).indexOf(membership.crossSaveOverride as DestinyMembership),
-            applicableMembershipTypes: membership.applicableMembershipTypes.map((item: number) => Object.values(DestinyMembership).indexOf(item as DestinyMembership)),
+            crossSaveOverride: membership.crossSaveOverride,
+            applicableMembershipTypes: membership.applicableMembershipTypes.map((item: number) => item),
             isPublic: membership.isPublic,
-            membershipType: Object.values(DestinyMembership).indexOf(membership.membershipType as DestinyMembership),
+            membershipType: membership.membershipType,
+            membershipId: membership.membershipId,
             displayName: membership.displayName,
         } as DestinyMembershipInfo;
         membershipInfoArray = [...membershipInfoArray, newMembership];
     }
 
-    return {
+    const mainMembershipInfo = membershipInfoArray.find((membershipInfo) => {
+        return membershipInfo.membershipType === membershipInfo.crossSaveOverride
+    });
+    let globalMembershipId: string = '';
+    if (mainMembershipInfo)
+        globalMembershipId = mainMembershipInfo.membershipId;
+    return <UserInfoCard>{
         bungieGlobalDisplayName: data.bungieGlobalDisplayName,
         bungieGlobalDisplayNameCode: data.bungieGlobalDisplayNameCode.toString().padStart(4, '0'),
         bungieNetMembershipId: data.bungieNetMembershipId,
-        destinyMemberships: membershipInfoArray
+        bungieMembershipId: globalMembershipId,
+        destinyMembership: mainMembershipInfo
     };
 }

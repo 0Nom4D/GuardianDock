@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-import {Box, FlatList, HStack, Input, Pressable, Text, View, VStack} from 'native-base';
+import {Input, View, VStack} from 'native-base';
 import {ImageBackground} from 'react-native';
 
 import CenteredAlert from '../components/CenteredAlert';
-import {fetchUsers} from '../utils/BungieAPI';
+import {fetchPvEStatsForUser, fetchUsers} from '../utils/BungieAPI';
 
 import {SerializeUserInfo} from '../utils/utils';
 import {UserInfoCard} from '../types/UserInfoCard.type';
@@ -22,7 +22,7 @@ export default function PvETrackerScreen() {
         let usersList: Array<UserInfoCard> = [];
 
         fetchUsers(bungieId).then((data) => {
-            if (data.Response.searchResults == undefined)
+            if (data.Response.searchResults === undefined)
                 setError(true);
             for (const userInfo of data.Response.searchResults)
                 usersList = [...usersList, SerializeUserInfo(userInfo)];
@@ -31,10 +31,19 @@ export default function PvETrackerScreen() {
     }, [bungieId]);
 
     useEffect(() => {
+        const mostValuableUser: UserInfoCard = userList[0];
         let pveStats: string;
 
-        if (selectedProfile === '')
+        if (selectedProfile === '' || mostValuableUser === undefined)
             return;
+        fetchPvEStatsForUser(
+            mostValuableUser.destinyMembership.membershipType,
+            mostValuableUser.bungieMembershipId,
+        ).then((data) => {
+            if (data.Response === undefined)
+                setError(true);
+            console.log(data.Response.mergedAllCharacters.results.allPvE);
+        })
     }, [selectedProfile]);
 
     return <>

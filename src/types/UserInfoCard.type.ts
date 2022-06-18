@@ -14,5 +14,6 @@ export type UserInfoCard = {
     "bungieGlobalDisplayName": string;
     "bungieGlobalDisplayNameCode": string;
     "bungieNetMembershipId": string;
-    "destinyMemberships": Array<DestinyMembershipInfo>;
+    "bungieMembershipId": string;
+    "destinyMembership": DestinyMembershipInfo;
 };
