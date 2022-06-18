@@ -2,7 +2,7 @@ import {DestinyMembership} from "./DestinyMembership.enum";
 
 export type DestinyMembershipInfo = {
     "iconPath": string;
-    "crossSaveOverride": number;
+    "crossSaveOverride": DestinyMembership;
     "applicableMembershipTypes": Array<DestinyMembership>;
     "isPublic": boolean;
     "membershipType": DestinyMembership;
