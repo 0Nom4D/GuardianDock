@@ -1,0 +1,16 @@
+name: FlutterCI
+
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Flutter action
+        uses: subosito/flutter-action@v2.10.0
+      - name: Flutter Android Test
+        run: |
+          flutter pub get
+          flutter analyze
+          flutter test
