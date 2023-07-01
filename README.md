@@ -1,16 +1,28 @@
-# guardian_dock
+# GuardianDock
 
-A new Flutter project.
+## Your stats provided by Guardians for Guardians
 
-## Getting Started
+[![Flutter MultiPlatform Build](https://github.com/0Nom4D/GuardianDock/actions/workflows/build.yml/badge.svg)](https://github.com/0Nom4D/GuardianDock/actions/workflows/build.yml) [![FlutterCI](https://github.com/0Nom4D/GuardianDock/actions/workflows/test.yml/badge.svg)](https://github.com/0Nom4D/GuardianDock/actions/workflows/test.yml)
 
-This project is a starting point for a Flutter application.
+GuardianDock is a multi-function app for Destiny 2.
 
-A few resources to get you started if this is your first Flutter project:
+GuardianDock goal is to provide a Destiny 2 player to access his stats at the same place:
+- PVE Stats (Strikes, Regular and Grandmaster Nightfalls)
+- PVP Stats (Crucible, Iron Banner, Trials Of Osiris)
+- Raid / Dungeon Stat
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## History
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+GuardianDock is an old school project developed with 2 friends: [EternalRat](https://github.com/EternalRat) and [TrueBabyChaise](https://github.com/TrueBabyChaise).
+
+The project was a React Native app connected with random APIs for Call Of Duty: Modern Warfare (2019) for Warzone, Fortnite and Destiny 2.
+
+The project knew a first wave of refactoring that I conducted alone but I didn't do much because I tried to make the app with TypeScript and React Native (again).
+
+## Author
+
+* **Arthur Adam** - [0Nom4D](https://github.com/0Nom4D)
+
+## Contributors
+
+[![Alt Text](https://contrib.rocks/image?repo=0Nom4D/GuardianDock)](https://github.com/0Nom4D/GuardianDock/graphs/contributors)
