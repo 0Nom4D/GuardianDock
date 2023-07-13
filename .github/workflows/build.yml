@@ -36,4 +36,5 @@ jobs:
           flutter build ipa --release --no-codesign
       - uses: actions/upload-artifact@v1
         with:
+          name: Runner.xcarchive
           path: /Users/runner/work/GuardianDock/GuardianDock/build/ios/archive/Runner.xcarchive
