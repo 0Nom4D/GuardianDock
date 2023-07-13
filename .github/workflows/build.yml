@@ -33,4 +33,7 @@ jobs:
         run: |
           flutter pub get
           flutter analyze
-          flutter build ipa --release
+          flutter build ipa --release --no-codesign
+      - uses: actions/upload-artifact@v1
+        with:
+          path: /Users/runner/work/GuardianDock/GuardianDock/build/ios/archive/Runner.xcarchive
