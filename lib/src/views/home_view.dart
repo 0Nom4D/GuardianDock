@@ -1,48 +1,82 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+import 'package:drop_down_search_field/drop_down_search_field.dart';
+import 'package:get_it/get_it.dart';
 
-  final String title;
+import 'package:guardian_dock/api/models/bungie_account.dart';
+import 'package:guardian_dock/api/client_api.dart';
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+class HomeView extends StatelessWidget {
+  HomeView({super.key});
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final TextEditingController _dropdownSearchFieldController = TextEditingController();
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  Future<List<BungieAccountData>> getPossibleBungieAccounts(String bungieName) async {
+    if (bungieName.isEmpty) {
+      return [];
+    }
+
+    List<BungieAccountData> possibleAccounts = [];
+    try {
+      possibleAccounts = await GetIt
+        .I<ApiClient>()
+        .search
+        .searchByBungieID(bungieName);
+    } on HttpException catch (ex) {
+      if (kDebugMode) {
+        print(ex.message);
+      }
+      return [];
+    }
+    return possibleAccounts;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: Text(widget.title),
+        elevation: 2.0,
+        backgroundColor: Colors.transparent,
+        title: const Text("GuardianDock"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: DropDownSearchField<String>(
+              textFieldConfiguration: TextFieldConfiguration(
+                style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+                decoration: InputDecoration(
+                  filled: true,
+                  hintText: "Bungie ID",
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground.withOpacity(.3)
+                  ),
+                ),
+                controller: _dropdownSearchFieldController,
+              ),
+              suggestionsCallback: (String search) async {
+                List<BungieAccountData> accounts = await getPossibleBungieAccounts(search);
+                return accounts.map(
+                  (account) => "${account.bungieGlobalDisplayName}#${account.bungieGlobalDisplayNameCode}"
+                );
+              },
+              itemBuilder: (context, suggestion) => ListTile(
+                title: Text(suggestion)
+              ),
+              onSuggestionSelected: (suggestion) {
+                _dropdownSearchFieldController.text = suggestion;
+              },
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+          )
+        ],
+      )
     );
   }
 }

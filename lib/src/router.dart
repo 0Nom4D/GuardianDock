@@ -11,8 +11,8 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: "/",
-      pageBuilder: (context, state) => const NoTransitionPage(
-        child: MyHomePage(title: 'Guardian Dock')
+      pageBuilder: (context, state) => NoTransitionPage(
+        child: HomeView()
       ),
       routes: const []
     ),

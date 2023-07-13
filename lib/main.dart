@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'package:get_it/get_it.dart';
+
+import 'package:guardian_dock/api/client_api.dart';
 import 'package:guardian_dock/src/router.dart';
 import 'package:guardian_dock/src/theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  GetIt.I.registerSingleton<ApiClient>(ApiClient());
   runApp(const MyApp());
 }
 
