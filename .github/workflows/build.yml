@@ -33,8 +33,4 @@ jobs:
         run: |
           flutter pub get
           flutter analyze
-          flutter build ipa --release --no-codesign
-      - uses: actions/upload-artifact@v1
-        with:
-          name: release-ios-ipa
-          path: /Users/runner/work/GuardianDock/GuardianDock/build/ios/iphoneos/Runner.app
+          flutter build ipa --release
