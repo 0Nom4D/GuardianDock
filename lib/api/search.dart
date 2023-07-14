@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:guardian_dock/api/client_api.dart';
 import 'package:guardian_dock/api/models/bungie_account.dart';
+import 'package:guardian_dock/api/client_api.dart';
 
 class Search {
   final ApiClient _client;

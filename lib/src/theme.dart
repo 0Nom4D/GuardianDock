@@ -17,6 +17,7 @@ const Color dangerColor = Color(0xFFF93154);
 const ColorScheme appScheme = ColorScheme(
     primary: destinyDarkNavyBlue,
     secondary: destinyDarkGrey,
+    tertiary: destinyYellowLight,
     background: destinyDarkGrey,
     brightness: Brightness.light,
     onError: dangerColor,
