@@ -9,11 +9,11 @@ class BungieAccountData {
   BungieAccountData({
     required this.bungieGlobalDisplayName,
     required this.bungieGlobalDisplayNameCode,
-    required this.bungieNetMembershipId,
+    String? bungieMembershipId,
     List<DestinyMembership>? memberships
-  }) : memberships = memberships ?? [];
+  }) : bungieNetMembershipId = bungieMembershipId ?? "", memberships = memberships ?? [];
 
-  String get getFullBungieId => "$bungieGlobalDisplayName#$bungieGlobalDisplayNameCode";
+  String get fullBungieId => "$bungieGlobalDisplayName#$bungieGlobalDisplayNameCode";
 
   bool get isCrossSavedAccount =>
     memberships!.length > 1 && memberships!.every((element) => element.overrideType != 0);
@@ -27,9 +27,11 @@ class BungieAccountData {
     :
       bungieGlobalDisplayName = json["bungieGlobalDisplayName"],
       bungieGlobalDisplayNameCode = json["bungieGlobalDisplayNameCode"],
-      bungieNetMembershipId = json["bungieNetMembershipId"],
-      memberships = json["destinyMemberships"] != null ? List<DestinyMembership>.from(json["destinyMemberships"].map((membership) =>
-        DestinyMembership.fromJson(membership))
+      bungieNetMembershipId = json["bungieNetMembershipId"] ?? "",
+      memberships = json["destinyMemberships"] != null ? List<DestinyMembership>.from(
+        json["destinyMemberships"].map((membership) =>
+          DestinyMembership.fromJson(membership)
+        )
       ) : [];
 
   Map<String, dynamic> toJson() =>
