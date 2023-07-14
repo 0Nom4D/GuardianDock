@@ -13,6 +13,16 @@ class BungieAccountData {
     List<DestinyMembership>? memberships
   }) : memberships = memberships ?? [];
 
+  String get getFullBungieId => "$bungieGlobalDisplayName#$bungieGlobalDisplayNameCode";
+
+  bool get isCrossSavedAccount =>
+    memberships!.length > 1 && memberships!.every((element) => element.overrideType != 0);
+
+  bool get isNotCrossSavedAccount =>
+    memberships!.length > 1 && memberships!.every((element) => element.overrideType == 0);
+
+  bool get isSinglePlatformAccount => memberships!.length == 1;
+
   BungieAccountData.fromJson(Map<String, dynamic> json)
     :
       bungieGlobalDisplayName = json["bungieGlobalDisplayName"],
