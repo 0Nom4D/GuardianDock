@@ -20,7 +20,6 @@ class Search {
     if (response.statusCode >= 400) {
       throw HttpException(response.body);
     }
-    log(response.body);
     return List<BungieAccountData>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['searchResults'].map((account) => BungieAccountData.fromJson(account)));
   }
 }
