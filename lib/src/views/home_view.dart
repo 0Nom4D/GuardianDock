@@ -52,10 +52,50 @@ class _HomeViewState extends State<HomeView> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(height:  MediaQuery.of(context).size.height * .1),
+            Center(
+              child: RichText(
+                text: TextSpan(
+                  text: "Track",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold
+                  ),
+                  children: [
+                    TextSpan(
+                      text: " your light",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.tertiary,
+                        fontSize: 35,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ]
+                ),
+              )
+            ),
+            SizedBox(height:  MediaQuery.of(context).size.height * .025),
+            Center(
+              child: Text(
+                "View all your statistics on the same platform.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500
+                ),
+              )
+            ),
+            SizedBox(height:  MediaQuery.of(context).size.height * .1),
             TypeAheadField<BungieAccountData>(
               hideOnEmpty: true,
+              keepSuggestionsOnLoading: false,
+              suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                color: Theme.of(context).colorScheme.background
+              ),
               textFieldConfiguration: TextFieldConfiguration(
                 style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
                 decoration: InputDecoration(
@@ -79,6 +119,10 @@ class _HomeViewState extends State<HomeView> {
 
                 return AccountSuggestionTile(relatedAccount: suggestion);
               },
+              itemSeparatorBuilder: (context, index) => Divider(
+                height: 1,
+                color: Theme.of(context).colorScheme.onBackground.withOpacity(.15)
+              ),
               onSuggestionSelected: (suggestion) {},
             )
           ],
