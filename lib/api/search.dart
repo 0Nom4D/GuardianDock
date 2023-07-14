@@ -1,8 +1,9 @@
-import 'dart:io';
+import 'dart:developer';
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:guardian_dock/api/client_api.dart';
 import 'package:guardian_dock/api/models/bungie_account.dart';
+import 'package:guardian_dock/api/client_api.dart';
 
 class Search {
   final ApiClient _client;
@@ -19,6 +20,7 @@ class Search {
     if (response.statusCode >= 400) {
       throw HttpException(response.body);
     }
+    log(response.body);
     return List<BungieAccountData>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['searchResults'].map((account) => BungieAccountData.fromJson(account)));
   }
 }
