@@ -1,9 +1,10 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:guardian_dock/src/widgets/account_suggestion_tile.dart';
@@ -29,19 +30,17 @@ class _HomeViewState extends State<HomeView> {
       return [];
     }
 
-    List<BungieAccountData> possibleAccounts = [];
     try {
-      possibleAccounts = await GetIt
+      return await GetIt
         .I<ApiClient>()
         .search
         .searchByBungieID(bungieName);
     } on HttpException catch (ex) {
       if (kDebugMode) {
-        print(ex.message);
+        log(ex.message);
       }
       return [];
     }
-    return possibleAccounts;
   }
 
   @override
@@ -74,19 +73,11 @@ class _HomeViewState extends State<HomeView> {
               },
               noItemsFoundBuilder: (context) => const EmptySuggestionTile(),
               itemBuilder: (context, suggestion) {
-                if (lastFetchedAccounts.isEmpty) {
+                if (suggestion.memberships!.isEmpty) {
                   return Container();
                 }
 
-                // Since the combination "displayName#displayNameCode" is unique, we can use it to find the current account.
-                BungieAccountData relatedAccount = lastFetchedAccounts.firstWhere(
-                  (e) => e.bungieNetMembershipId == suggestion.bungieNetMembershipId
-                );
-                if (relatedAccount.memberships!.isEmpty) {
-                  return Container();
-                }
-
-                return AccountSuggestionTile(relatedAccount: relatedAccount);
+                return AccountSuggestionTile(relatedAccount: suggestion);
               },
               onSuggestionSelected: (suggestion) {},
             )

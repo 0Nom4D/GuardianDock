@@ -11,7 +11,9 @@ class AccountSuggestionTile extends StatelessWidget {
 
   DestinyMembership getMainDestinyMembership() {
     if (relatedAccount.isCrossSavedAccount) {
-      return relatedAccount.memberships!.singleWhere((element) => element.overrideType == element.membershipType);
+      return relatedAccount.memberships!.singleWhere((element) =>
+        element.overrideType == element.membershipType
+      );
     }
     return relatedAccount.memberships!.first;
   }
