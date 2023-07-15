@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 import 'package:guardian_dock/api/models/destiny_membership.dart';

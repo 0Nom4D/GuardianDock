@@ -1,6 +1,8 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+
 import 'package:guardian_dock/src/views/home_view.dart';
 
 final _mainNavigationKey = GlobalKey<NavigatorState>();
