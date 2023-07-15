@@ -30,9 +30,7 @@ class AccountSuggestionTile extends StatelessWidget {
           getMainDestinyMembership().platformIconPath
         ).toString()
       ),
-      title: Text(
-        "${relatedAccount.bungieGlobalDisplayName}#${relatedAccount.bungieGlobalDisplayNameCode}"
-      ),
+      title: Text(relatedAccount.fullBungieId),
       tileColor: Theme.of(context).colorScheme.background,
       textColor: Theme.of(context).colorScheme.onBackground
     );
