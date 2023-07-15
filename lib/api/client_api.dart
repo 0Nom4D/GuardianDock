@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -41,7 +40,7 @@ class ApiClient {
     final jsonManifest = jsonDecode(utf8.decode(response.bodyBytes));
     if (appManifest == null || jsonManifest["Response"]["version"] != appManifest?.version) {
       appManifest = DestinyManifest.fromJson(jsonManifest["Response"]);
-      manifestStorage.write(key: 'manifest', value: appManifest?.toJson().toString());
+      manifestStorage.write(key: 'manifest', value: jsonEncode(appManifest?.toJson()));
     }
   }
 }
