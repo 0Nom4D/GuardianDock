@@ -1,5 +1,5 @@
 class MobileGearAssetDataBases {
-  String version;
+  int version;
   String databasePath;
 
   MobileGearAssetDataBases({

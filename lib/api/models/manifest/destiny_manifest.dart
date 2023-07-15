@@ -8,7 +8,7 @@ class DestinyManifest {
   List<MobileGearAssetDataBases> mobileGearsAssetsDB;
 
   Map<String, String> mobileWorldContentPaths;
-  Map<String, dynamic> iconImagePyramidInfo;
+  List<dynamic> iconImagePyramidInfo;
   Map<String, String> jsonWorldContentPaths;
   Map<String, String> mobileGearCDN;
 
@@ -34,11 +34,21 @@ class DestinyManifest {
       mobileGearsAssetsDB = List<MobileGearAssetDataBases>.from(
         json["mobileGearAssetDataBases"].map((e) => MobileGearAssetDataBases.fromJson(e))
       ),
-      mobileWorldContentPaths = json["mobileWorldContentPaths"],
+      mobileWorldContentPaths = Map<String, String>.from(
+        json["mobileWorldContentPaths"].map((key, value) => MapEntry(key, value?.toString()))
+      ),
       iconImagePyramidInfo = json["iconImagePyramidInfo"],
-      jsonWorldContentPaths = json["jsonWorldContentPaths"],
-      mobileGearCDN = json["mobileGearCDN"],
-      jsonWorldComponentContentPaths = json["jsonWorldComponentContentPaths"];
+      jsonWorldContentPaths = Map<String, String>.from(
+          json["jsonWorldContentPaths"].map((key, value) => MapEntry(key, value?.toString()))
+      ),
+      mobileGearCDN = Map<String, String>.from(
+          json["mobileGearCDN"].map((key, value) => MapEntry(key, value?.toString()))
+      ),
+      jsonWorldComponentContentPaths = Map<String, Map<String, String>>.from(
+        json["jsonWorldComponentContentPaths"].map((key, value) => MapEntry(key, Map<String, String>.from(
+          value.map((keyy, valuee) => MapEntry(keyy, valuee.toString()))
+        )))
+      );
 
   Map<String, dynamic> toJson() =>
     {
