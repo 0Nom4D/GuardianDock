@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -21,13 +22,16 @@ class ApiClient {
 
   DestinyManifest? appManifest;
 
-  ApiClient({http.Client? client}) : client = client ?? http.Client() {
+  ApiClient({String? manifest, http.Client? client}) : client = client ?? http.Client() {
+    appManifest = manifest != null ? DestinyManifest.fromJson(
+      jsonDecode(manifest)
+    ) : null;
     _search = Search(this);
   }
 
   Future<void> getManifest() async {
     final manifestStorage = GetIt.I<FlutterSecureStorage>();
-    final path = Uri.https(ApiClient.baseUrl, 'Destiny2/Manifest');
+    final path = Uri.https(ApiClient.baseUrl, 'Platform/Destiny2/Manifest');
     final response = await client.get(path, headers: headers);
 
     if (response.statusCode >= 400) {
