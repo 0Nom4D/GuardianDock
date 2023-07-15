@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -8,15 +10,28 @@ import 'package:guardian_dock/main.dart';
 
 @GenerateMocks([http.Client])
 void main() {
-  testWidgets('Player search build', (WidgetTester tester) async {
+  testWidgets('Manifest Loading', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('Player search build', (WidgetTester tester) async {
+    final completer = Completer();
+    await tester.pumpWidget(const MyApp());
+
+    completer.complete();
+    await tester.pumpAndSettle();
     expect(find.text('View all your statistics on the same platform.'), findsOneWidget);
     expect(find.text('Bungie ID'), findsOneWidget);
   });
 
   testWidgets('Player search enter text', (WidgetTester tester) async {
+    final completer = Completer();
     await tester.pumpWidget(const MyApp());
+
+    completer.complete();
+    await tester.pumpAndSettle();
 
     expect(find.text('Bungie ID'), findsOneWidget);
 

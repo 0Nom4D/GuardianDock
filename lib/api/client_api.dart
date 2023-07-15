@@ -1,5 +1,11 @@
-import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:get_it/get_it.dart';
+
+import 'package:guardian_dock/api/models/manifest/destiny_manifest.dart';
 import 'package:guardian_dock/api/search.dart';
 
 class ApiClient {
@@ -13,7 +19,28 @@ class ApiClient {
 
   Map<String, String> get headers => {'Content-Type': 'application/json', 'X-API-Key': apiKey};
 
-  ApiClient({http.Client? client}) : client = client ?? http.Client() {
+  DestinyManifest? appManifest;
+
+  ApiClient({String? manifest, http.Client? client}) : client = client ?? http.Client() {
+    appManifest = manifest != null ? DestinyManifest.fromJson(
+      jsonDecode(manifest)
+    ) : null;
     _search = Search(this);
+  }
+
+  Future<void> getManifest() async {
+    final manifestStorage = GetIt.I<FlutterSecureStorage>();
+    final path = Uri.https(ApiClient.baseUrl, 'Platform/Destiny2/Manifest');
+    final response = await client.get(path, headers: headers);
+
+    if (response.statusCode >= 400) {
+      throw HttpException(response.body);
+    }
+
+    final jsonManifest = jsonDecode(utf8.decode(response.bodyBytes));
+    if (appManifest == null || jsonManifest["Response"]["version"] != appManifest?.version) {
+      appManifest = DestinyManifest.fromJson(jsonManifest["Response"]);
+      manifestStorage.write(key: 'manifest', value: jsonEncode(appManifest?.toJson()));
+    }
   }
 }
