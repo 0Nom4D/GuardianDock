@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 const Color destinyDarkNavyBlue = Color(0xFF29303C);

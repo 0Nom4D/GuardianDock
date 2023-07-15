@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'package:flutter/material.dart';
 
 import 'package:guardian_dock/api/models/destiny_membership.dart';
@@ -29,9 +30,7 @@ class AccountSuggestionTile extends StatelessWidget {
           getMainDestinyMembership().platformIconPath
         ).toString()
       ),
-      title: Text(
-        "${relatedAccount.bungieGlobalDisplayName}#${relatedAccount.bungieGlobalDisplayNameCode}"
-      ),
+      title: Text(relatedAccount.fullBungieId),
       tileColor: Theme.of(context).colorScheme.background,
       textColor: Theme.of(context).colorScheme.onBackground
     );
