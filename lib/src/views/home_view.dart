@@ -30,6 +30,8 @@ class _HomeViewState extends State<HomeView> {
   Future<List<BungieAccountData>> getPossibleBungieAccounts(String bungieName) async {
     if (bungieName.isEmpty) {
       return [];
+    } else if (bungieName.contains('#')) {
+      bungieName = bungieName.split('#')[0];
     }
 
     try {
