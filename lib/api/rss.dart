@@ -12,7 +12,7 @@ class Rss {
   const Rss(ApiClient client) : _client = client;
 
   Future<List<NewsArticle>> getLatestArticles(String locale, {int pagination = 0}) async {
-    final path = Uri.https(ApiClient.baseUrl, "Platform/Content/Rss/NewsArticles/$pagination?includebody=true&lc=$locale");
+    final path = Uri.https(ApiClient.baseUrl, "Platform/Content/Rss/NewsArticles/$pagination", {"includebody": "true", "lc": locale});
     final response = await _client.client.get(path, headers: _client.headers);
 
     if (response.statusCode >= 400) {

@@ -6,7 +6,7 @@ class NewsArticle {
   String description;
   String htmlContent;
   String bannerImagePath;
-  String optionalMobileAsset;
+  String? optionalMobileAsset;
 
   NewsArticle({
     required this.uid,
@@ -16,7 +16,7 @@ class NewsArticle {
     required this.description,
     required this.htmlContent,
     required this.bannerImagePath,
-    required this.optionalMobileAsset
+    this.optionalMobileAsset
   });
 
   NewsArticle.fromJson(Map<String, dynamic> json)
@@ -28,5 +28,5 @@ class NewsArticle {
         description = json["Description"],
         htmlContent = json["HtmlContent"],
         bannerImagePath = json["ImagePath"],
-        optionalMobileAsset = json["OptionalMobileImagePath"];
+        optionalMobileAsset = json["OptionalMobileImagePath"] ?? "";
 }
