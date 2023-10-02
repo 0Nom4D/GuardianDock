@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:guardian_dock/api/models/manifest/destiny_manifest.dart';
 import 'package:guardian_dock/api/search.dart';
+import 'package:guardian_dock/api/rss.dart';
 
 class ApiClient {
   static const String baseUrl = "www.bungie.net";
@@ -16,7 +17,11 @@ class ApiClient {
 
   late Search _search;
 
+  late Rss _rss;
+
   Search get search => _search;
+
+  Rss get rss => _rss;
 
   Map<String, String> get headers => {'Content-Type': 'application/json', 'X-API-Key': apiKey};
 
@@ -27,6 +32,7 @@ class ApiClient {
       jsonDecode(manifest)
     ) : null;
     _search = Search(this);
+    _rss = Rss(this);
   }
 
   Future<void> getManifest() async {
