@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:guardian_dock/api/models/news_article.dart';
 
-class NewsArticleFullWidthItem extends StatelessWidget {
+class NewsArticleItem extends StatelessWidget {
   final NewsArticle rssInformation;
 
-  const NewsArticleFullWidthItem({required this.rssInformation, super.key});
+  const NewsArticleItem({required this.rssInformation, super.key});
 
   @override
   Widget build(BuildContext context) {
