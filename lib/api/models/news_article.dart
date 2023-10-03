@@ -28,5 +28,5 @@ class NewsArticle {
         description = json["Description"],
         htmlContent = json["HtmlContent"],
         bannerImagePath = json["ImagePath"],
-        optionalMobileAsset = json["OptionalMobileImagePath"] ?? "";
+        optionalMobileAsset = json["OptionalMobileImagePath"];
 }
