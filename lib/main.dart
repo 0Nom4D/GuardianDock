@@ -14,11 +14,11 @@ void main() async {
   GetIt.I.registerSingleton<ApiClient>(
     ApiClient(manifest: (await storage.read(key: 'manifest')))
   );
-  runApp(const MyApp());
+  runApp(const GuardianDock());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class GuardianDock extends StatelessWidget {
+  const GuardianDock({super.key});
 
   @override
   Widget build(BuildContext context) {
