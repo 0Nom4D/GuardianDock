@@ -90,17 +90,17 @@ class _HomeViewState extends State<HomeView> {
           backgroundColor: Theme.of(context).colorScheme.background,
           appBar: const GuardianDockAppbar(),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TypeAheadField<BungieAccountData>(
                   hideOnEmpty: true,
                   hideOnLoading: true,
                   keepSuggestionsOnLoading: false,
                   suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                      color: Theme.of(context).colorScheme.background
+                    color: Theme.of(context).colorScheme.background
                   ),
                   textFieldConfiguration: TextFieldConfiguration(
                     style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
@@ -108,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                       filled: true,
                       hintText: "Bungie ID",
                       hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground.withOpacity(.3)
+                        color: Theme.of(context).colorScheme.onBackground.withOpacity(.3)
                       ),
                     ),
                     controller: _dropdownSearchFieldController,
@@ -131,6 +131,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   onSuggestionSelected: (suggestion) {},
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height *.05),
                 Center(
                   child: RichText(
                     text: TextSpan(
@@ -153,6 +154,7 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   )
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height *.025),
                 Center(
                   child: Text(
                     "View all your statistics on the same platform.",
@@ -164,8 +166,9 @@ class _HomeViewState extends State<HomeView> {
                     ),
                   )
                 ),
-                !isLoadingNewsArticle ? SizedBox(
-                  height: MediaQuery.of(context).size.height * .4,
+                SizedBox(height: MediaQuery.of(context).size.height * .05),
+                !isLoadingNewsArticle ? Expanded(
+                  flex: 2,
                   child: NewsArticlesFeedList(rssFeed: fetchedArticles)
                 ) : const Center(
                   child: CircularProgressIndicator()
