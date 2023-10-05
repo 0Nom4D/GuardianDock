@@ -10,9 +10,11 @@ class NewsArticlesFeedList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemBuilder: (BuildContext context, int count) => NewsArticleItem(rssInformation: rssFeed[count]),
+    return SliverList.builder(
+      itemBuilder: (BuildContext context, int count) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: NewsArticleItem(rssInformation: rssFeed[count]),
+      ),
       itemCount: rssFeed.length,
     );
   }
