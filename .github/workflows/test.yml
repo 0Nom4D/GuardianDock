@@ -9,6 +9,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Flutter action
         uses: subosito/flutter-action@v2.10.0
+      - name: Install Python dependencies
+        run: |
+          apt update -y && apt install -y python3 python3-distutils python-is-python3 curl bc xmlstarlet
+          curl -O https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py && chmod +x lcov_cobertura.py
       - name: Flutter Android Test
         run: |
           flutter pub get
