@@ -36,7 +36,7 @@ jobs:
           format: markdown
           indicators: true
           output: both
-          thresholds: '60 80'
+          thresholds: '75 80'
       - uses: actions/upload-artifact@v1
         with:
           name: code-coverage-results.md
