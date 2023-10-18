@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import 'package:guardian_dock/api/models/news_article.dart';
@@ -16,7 +18,7 @@ class NewsArticleItem extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: GestureDetector(
-        onTap: null,
+        onTap: () => GoRouter.of(context).push('/article/${rssInformation.uid}', extra: rssInformation),
         child: Stack(
           children: [
             Container(
