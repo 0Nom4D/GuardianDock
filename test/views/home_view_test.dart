@@ -1242,13 +1242,13 @@ void main() {
   });
 
   testWidgets('Manifest Loading', (WidgetTester tester) async {
-    await tester.pumpWidget(const GuardianDock());
+    await tester.pumpWidget(GuardianDock());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets('Player search build', (WidgetTester tester) async {
-    await tester.pumpWidget(const GuardianDock());
+    await tester.pumpWidget(GuardianDock());
 
     try {
       await tester.pumpAndSettle();
@@ -1262,7 +1262,7 @@ void main() {
 
   testWidgets('Player search enter text', (WidgetTester tester) async {
     await mockNetworkImagesFor(() async {
-      await tester.pumpWidget(const GuardianDock());
+      await tester.pumpWidget(GuardianDock());
 
       try {
         await tester.pumpAndSettle();
