@@ -39,6 +39,8 @@ class NewsArticleItem extends StatelessWidget {
                 child: Image.network(
                   rssInformation.bannerImagePath,
                   fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height * .15,
+                  width: MediaQuery.of(context).size.width
                 ),
               ),
             ),
