@@ -69,7 +69,7 @@ void main() {
       );
     });
 
-    when(client.get(Uri.https(ApiClient.baseUrl, "Platform/User/Search/GlobalName/0/"), headers: anyNamed("headers"))).thenAnswer((_) async {
+    when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Destiny2/Manifest"), headers: anyNamed("headers"))).thenAnswer((_) async {
       return http.Response(
           '''{
             "Response": {
