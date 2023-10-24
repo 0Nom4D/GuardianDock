@@ -44,7 +44,7 @@ dependencies:
   intl: ^0.18.1
   mocktail: ^1.0.1
   network_image_mock: ^2.1.1
-  flutter_widget_from_html: ^0.14.3
+  flutter_widget_from_html: ^0.14.4
 
 dev_dependencies:
   flutter_test:

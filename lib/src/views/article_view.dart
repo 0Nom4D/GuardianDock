@@ -32,6 +32,9 @@ class ArticleView extends StatelessWidget {
                   if (element.outerHtml.startsWith("<a href")) {
                     return { 'color': "#${Theme.of(context).colorScheme.tertiary.value.toRadixString(16).substring(2)}" };
                   }
+                  if (element.outerHtml.startsWith("<td")) {
+                    return { 'border': "1px dotted #${Theme.of(context).colorScheme.onBackground.value.toRadixString(16).substring(2)}" };
+                  }
 
                   return null;
                 },
