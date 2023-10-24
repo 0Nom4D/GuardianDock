@@ -22,8 +22,7 @@ class ArticleView extends StatelessWidget {
           SliverToBoxAdapter(
             child: NewsArticleHeader(article: article),
           ),
-          SliverFillRemaining(
-            hasScrollBody: false,
+          SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: HtmlWidget(
