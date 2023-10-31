@@ -17,33 +17,25 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<NewsArticle> fetchedArticles = [];
-
   bool isLoadingNewsArticle = false;
+  late Future<void> future;
 
   Future<void> getManifest() async => await GetIt.I<ApiClient>().getManifest();
 
-  void getNewsArticles() async {
-    setState(() {
-      isLoadingNewsArticle = true;
-    });
-
+  Future<void> getNewsArticles() async {
     fetchedArticles = await GetIt.I<ApiClient>().rss.getLatestArticles('fr');
-
-    setState(() {
-      isLoadingNewsArticle = false;
-    });
   }
 
   @override
   void initState() {
+    future = Future.wait([getNewsArticles(), getManifest()]);
     super.initState();
-    getNewsArticles();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getManifest(),
+      future: future,
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -115,13 +107,7 @@ class _HomeViewState extends State<HomeView> {
               SliverToBoxAdapter(
                 child: SizedBox(height: MediaQuery.of(context).size.height *.05)
               ),
-              !isLoadingNewsArticle
-                ? NewsArticlesFeedList(rssFeed: fetchedArticles)
-                : const SliverToBoxAdapter(
-                  child: Center(
-                    child: CircularProgressIndicator()
-                  ),
-                ),
+              NewsArticlesFeedList(rssFeed: fetchedArticles)
             ],
           )
         );
