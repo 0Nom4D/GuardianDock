@@ -16,9 +16,10 @@ class GuardianDockAppbar extends StatelessWidget implements PreferredSizeWidget 
         color: Theme.of(context).colorScheme.onBackground,
         onPressed: () => GoRouter.of(context).pop()
       ) : null,
-      centerTitle: false,
+      centerTitle: true,
       title: Text(
         title ?? "GuardianDock",
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       actions: [
