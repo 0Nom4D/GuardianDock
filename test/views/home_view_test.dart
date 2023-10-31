@@ -69,7 +69,7 @@ void main() {
       );
     });
 
-    when(client.get(Uri.https(ApiClient.baseUrl, "Platform/User/Search/GlobalName/0/"), headers: anyNamed("headers"))).thenAnswer((_) async {
+    when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Destiny2/Manifest"), headers: anyNamed("headers"))).thenAnswer((_) async {
       return http.Response(
           '''{
             "Response": {
@@ -1242,13 +1242,13 @@ void main() {
   });
 
   testWidgets('Manifest Loading', (WidgetTester tester) async {
-    await tester.pumpWidget(const GuardianDock());
+    await tester.pumpWidget(GuardianDock());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets('Player search build', (WidgetTester tester) async {
-    await tester.pumpWidget(const GuardianDock());
+    await tester.pumpWidget(GuardianDock());
 
     try {
       await tester.pumpAndSettle();
@@ -1262,7 +1262,7 @@ void main() {
 
   testWidgets('Player search enter text', (WidgetTester tester) async {
     await mockNetworkImagesFor(() async {
-      await tester.pumpWidget(const GuardianDock());
+      await tester.pumpWidget(GuardianDock());
 
       try {
         await tester.pumpAndSettle();

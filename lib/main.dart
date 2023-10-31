@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:guardian_dock/api/client_api.dart';
@@ -14,11 +15,13 @@ void main() async {
   GetIt.I.registerSingleton<ApiClient>(
     ApiClient(manifest: (await storage.read(key: 'manifest')))
   );
-  runApp(const GuardianDock());
+  runApp(GuardianDock());
 }
 
 class GuardianDock extends StatelessWidget {
-  const GuardianDock({super.key});
+  final _mainNavigationKey = GlobalKey<NavigatorState>();
+
+  GuardianDock({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,11 @@ class GuardianDock extends StatelessWidget {
       title: 'GuardianDock',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.defaultTheme,
-      routerConfig: router,
+      routerConfig: GoRouter(
+        initialLocation: '/',
+        navigatorKey: _mainNavigationKey,
+        routes: mainRoutes
+      ),
     );
   }
 }
