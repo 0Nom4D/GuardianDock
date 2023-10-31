@@ -1298,7 +1298,7 @@ void main() {
       await tester.tap(newsArticleItem);
 
       await tester.pumpAndSettle();
-      expect(find.text("Destiny 2 Update 7.2.5"), findsOneWidget);
+      expect(find.text("Destiny 2 Update 7.2.5"), findsNWidgets(2));
       expect(find.byType(HtmlWidget), findsOneWidget);
     });
   });
