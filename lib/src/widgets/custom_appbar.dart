@@ -23,14 +23,15 @@ class GuardianDockAppbar extends StatelessWidget implements PreferredSizeWidget 
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          tooltip: "Link a Bungie account",
-          icon: Icon(
-            Icons.link,
-            color: Theme.of(context).colorScheme.onBackground
+        if (GoRouterState.of(context).path! == '/')
+          IconButton(
+            onPressed: () {},
+            tooltip: "Link a Bungie account",
+            icon: Icon(
+              Icons.link,
+              color: Theme.of(context).colorScheme.onBackground
+            )
           )
-        )
       ],
     );
   }
