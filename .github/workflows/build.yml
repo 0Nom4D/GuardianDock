@@ -17,7 +17,7 @@ jobs:
         run: |
           flutter pub get
           flutter analyze
-          flutter build apk
+          flutter build apk --dart-define=BNG_API_KEY=${{ secrets.SECRET_API_KEY }}
       - uses: actions/upload-artifact@v1
         with:
           name: release-android-apk
@@ -38,7 +38,7 @@ jobs:
         run: |
           flutter pub get
           flutter analyze
-          flutter build ipa --release --no-codesign
+          flutter build ipa --release --no-codesign --dart-define=BNG_API_KEY=${{ secrets.SECRET_API_KEY }}
       - uses: actions/upload-artifact@v1
         with:
           name: Runner.xcarchive
