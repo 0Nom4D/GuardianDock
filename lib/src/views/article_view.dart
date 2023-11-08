@@ -16,7 +16,7 @@ class ArticleView extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: const GuardianDockAppbar(),
+      appBar: GuardianDockAppbar(title: article.title),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
