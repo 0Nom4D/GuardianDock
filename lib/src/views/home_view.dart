@@ -51,64 +51,73 @@ class _HomeViewState extends State<HomeView> {
           resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(context).colorScheme.background,
           appBar: const GuardianDockAppbar(),
-          body: CustomScrollView(
-            shrinkWrap: true,
-            slivers: [
-              SliverAppBar(
-                backgroundColor: Theme.of(context).colorScheme.background,
-                toolbarHeight: MediaQuery.of(context).size.height * .05,
-                collapsedHeight: MediaQuery.of(context).size.height * .05,
-                expandedHeight: MediaQuery.of(context).size.height * .1,
-                pinned: true,
-                elevation: 20,
-                centerTitle: true,
-                flexibleSpace: const PersistentSearchBar()
-              ),
-              SliverToBoxAdapter(
-                child: Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Track",
+          body: GestureDetector(
+            onTap: () {
+              FocusScopeNode currentFocus = FocusScope.of(context);
+
+              if (!currentFocus.hasPrimaryFocus) {
+                currentFocus.unfocus();
+              }
+            },
+            child: CustomScrollView(
+              shrinkWrap: true,
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  toolbarHeight: MediaQuery.of(context).size.height * .05,
+                  collapsedHeight: MediaQuery.of(context).size.height * .05,
+                  expandedHeight: MediaQuery.of(context).size.height * .1,
+                  pinned: true,
+                  elevation: 20,
+                  centerTitle: true,
+                  flexibleSpace: const PersistentSearchBar()
+                ),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Track",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold
+                        ),
+                        children: [
+                          TextSpan(
+                            text: " your light",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ]
+                      ),
+                    )
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: MediaQuery.of(context).size.height *.025)
+                ),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: Text(
+                      "View all your statistics on the same platform.",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.onBackground,
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500
                       ),
-                      children: [
-                        TextSpan(
-                          text: " your light",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.tertiary,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ]
-                    ),
-                  )
+                    )
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(height: MediaQuery.of(context).size.height *.025)
-              ),
-              SliverToBoxAdapter(
-                child: Center(
-                  child: Text(
-                    "View all your statistics on the same platform.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500
-                    ),
-                  )
+                SliverToBoxAdapter(
+                  child: SizedBox(height: MediaQuery.of(context).size.height *.05)
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(height: MediaQuery.of(context).size.height *.05)
-              ),
-              NewsArticlesFeedList(rssFeed: fetchedArticles)
-            ],
+                NewsArticlesFeedList(rssFeed: fetchedArticles)
+              ],
+            ),
           )
         );
       },
