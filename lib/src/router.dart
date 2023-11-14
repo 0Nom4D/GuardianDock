@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:guardian_dock/api/models/bungie_account.dart';
 
 import 'package:guardian_dock/api/models/news_article.dart';
 import 'package:guardian_dock/src/views/article_view.dart';
 import 'package:guardian_dock/src/views/home_view.dart';
+import 'package:guardian_dock/src/views/stats_view.dart';
 
 final mainRoutes = [
   GoRoute(
@@ -22,6 +24,25 @@ final mainRoutes = [
 
       return CustomTransitionPage(
         child: ArticleView(article: detailedArticle),
+        transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget? widget) => SlideTransition(
+          position: animation.drive(
+            Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero
+            ).chain(CurveTween(curve: Curves.ease))
+          ),
+          child: widget
+        )
+      );
+    }
+  ),
+  GoRoute(
+    path: '/stat/:userId',
+    pageBuilder: (context, state) {
+      BungieAccountData account = state.extra as BungieAccountData;
+
+      return CustomTransitionPage(
+        child: StatView(bungieAccount: account),
         transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget? widget) => SlideTransition(
           position: animation.drive(
             Tween<Offset>(

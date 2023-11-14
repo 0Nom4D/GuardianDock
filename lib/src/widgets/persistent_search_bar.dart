@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:guardian_dock/src/widgets/account_suggestion_tile.dart';
 import 'package:guardian_dock/src/widgets/empty_suggestion_tile.dart';
@@ -60,6 +61,7 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
           ),
           textFieldConfiguration: TextFieldConfiguration(
             style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+            cursorColor: Theme.of(context).colorScheme.onBackground,
             decoration: InputDecoration(
               filled: true,
               hintText: "Bungie ID",
@@ -85,7 +87,9 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
             height: 1,
             color: Theme.of(context).colorScheme.onBackground.withOpacity(.15)
           ),
-          onSuggestionSelected: (suggestion) {},
+          onSuggestionSelected: (suggestion) {
+            GoRouter.of(context).push('/stat/${suggestion.bungieNetMembershipId}', extra: suggestion);
+          },
         ),
       ),
     );
