@@ -59,6 +59,7 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
             color: Theme.of(context).colorScheme.background
           ),
           textFieldConfiguration: TextFieldConfiguration(
+            cursorColor: Theme.of(context).colorScheme.onBackground,
             style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
             decoration: InputDecoration(
               filled: true,
