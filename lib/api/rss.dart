@@ -15,7 +15,9 @@ class Rss {
     final path = Uri.https(ApiClient.baseUrl, "Platform/Content/Rss/NewsArticles/$pagination", {"includebody": "true", "lc": locale});
     final response = await _client.client.get(path, headers: _client.headers);
 
-    if (response.statusCode >= 400) {
+    if (response.statusCode == 503) {
+      throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
+    } else if (response.statusCode >= 400) {
       throw HttpException(response.body);
     }
     return List<NewsArticle>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['NewsArticles'].map((account) => NewsArticle.fromJson(account)));
