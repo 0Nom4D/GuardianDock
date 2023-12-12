@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:guardian_dock/src/widgets/maintenance_error.dart';
 
 import 'package:guardian_dock/src/widgets/persistent_search_bar.dart';
 import 'package:guardian_dock/src/widgets/rss/rss_news_feed.dart';
@@ -46,6 +47,8 @@ class _HomeViewState extends State<HomeView> {
               ),
             )
           );
+        } else if (snapshot.hasError) {
+          return Scaffold(body: MaintenanceError(error: snapshot.error));
         }
         return Scaffold(
           resizeToAvoidBottomInset: false,
