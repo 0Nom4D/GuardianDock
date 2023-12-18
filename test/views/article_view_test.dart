@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +26,7 @@ void main() {
   setUpAll(() {
     final client = MockClient();
     GetIt.I.registerSingleton<ApiClient>(ApiClient(client: client));
+    GetIt.I.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
 
     when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Destiny2/Manifest"), headers: anyNamed("headers"))).thenAnswer((_) async {
       return http.Response(

@@ -17,7 +17,9 @@ class Search {
       body: jsonEncode({ "displayNamePrefix": displayNamePrefix })
     );
 
-    if (response.statusCode >= 400) {
+    if (response.statusCode == 503) {
+      throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
+    } else if (response.statusCode >= 400) {
       throw HttpException(response.body);
     }
     return List<BungieAccountData>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['searchResults'].map((account) => BungieAccountData.fromJson(account)));
