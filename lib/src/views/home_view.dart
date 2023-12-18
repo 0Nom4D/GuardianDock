@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get_it/get_it.dart';
-import 'package:guardian_dock/src/widgets/maintenance_error.dart';
 
 import 'package:guardian_dock/src/widgets/persistent_search_bar.dart';
+import 'package:guardian_dock/src/widgets/maintenance_error.dart';
 import 'package:guardian_dock/src/widgets/rss/rss_news_feed.dart';
 import 'package:guardian_dock/src/widgets/custom_appbar.dart';
 import 'package:guardian_dock/api/models/news_article.dart';
@@ -19,7 +19,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   List<NewsArticle> fetchedArticles = [];
   bool isLoadingNewsArticle = false;
-  late Future<void> future;
 
   Future<void> getManifest() async => await GetIt.I<ApiClient>().getManifest();
 
@@ -29,14 +28,13 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void initState() {
-    future = Future.wait([getNewsArticles(), getManifest()]);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: future,
+      future: Future.wait([getNewsArticles(), getManifest()]),
       builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -48,7 +46,15 @@ class _HomeViewState extends State<HomeView> {
             )
           );
         } else if (snapshot.hasError) {
-          return Scaffold(body: MaintenanceError(error: snapshot.error));
+          return Scaffold(
+            body: MaintenanceError(
+              error: snapshot.error,
+              onReload: () {
+                setState(() {});
+                Future.delayed(const Duration(seconds: 5));
+              },
+            )
+          );
         }
         return Scaffold(
           resizeToAvoidBottomInset: false,
