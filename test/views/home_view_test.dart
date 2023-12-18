@@ -1224,33 +1224,35 @@ void main() {
     });
 
     when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Content/Rss/NewsArticles/0", {"includebody": "true", "lc": "fr"}), headers: anyNamed("headers"))).thenAnswer((_) async {
-        return http.Response(
-          '''{
-            "Response": {
-              "CurrentPaginationToken": 0,
-              "NextPaginationToken": 1,
-              "ResultCountThisPage": 25,
-              "NewsArticles": [],
-              "PagerAction": "News"
-            },
-            "ErrorCode": 1,
-            "ThrottleSeconds": 0,
-            "ErrorStatus": "Success",
-            "Message": "Ok",
-            "MessageData": {}
-          }''',
-          200
-        );
+      return http.Response(
+        '''{
+          "Response": {
+            "CurrentPaginationToken": 0,
+            "NextPaginationToken": 1,
+            "ResultCountThisPage": 25,
+            "NewsArticles": [],
+            "PagerAction": "News"
+          },
+          "ErrorCode": 1,
+          "ThrottleSeconds": 0,
+          "ErrorStatus": "Success",
+          "Message": "Ok",
+          "MessageData": {}
+        }''',
+        200
+      );
     });
   });
 
   testWidgets('Manifest Loading', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await tester.pumpWidget(GuardianDock());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets('Player search build', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await tester.pumpWidget(GuardianDock());
 
     try {
@@ -1264,6 +1266,7 @@ void main() {
   });
 
   testWidgets('Player search enter text', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await mockNetworkImagesFor(() async {
       await tester.pumpWidget(GuardianDock());
 
@@ -1286,6 +1289,7 @@ void main() {
   });
 
   testWidgets('Bungie Maintenance Error', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await mockNetworkImagesFor(() async {
       when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Destiny2/Manifest"), headers: anyNamed("headers"))).thenAnswer((_) async {
         return http.Response(
