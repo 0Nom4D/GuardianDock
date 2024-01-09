@@ -19,9 +19,7 @@ class ArticleView extends StatelessWidget {
       appBar: GuardianDockAppbar(title: article.title),
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: NewsArticleHeader(article: article),
-          ),
+          NewsArticleHeader(article: article),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16),

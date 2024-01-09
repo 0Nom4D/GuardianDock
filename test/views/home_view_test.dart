@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:http/http.dart' as http;
@@ -14,9 +15,11 @@ import 'home_view_test.mocks.dart';
 
 @GenerateMocks([http.Client])
 void main() {
+  final client = MockClient();
+
   setUpAll(() {
-    final client = MockClient();
     GetIt.I.registerSingleton<ApiClient>(ApiClient(client: client));
+    GetIt.I.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
 
     when(client.post(Uri.https(ApiClient.baseUrl, "Platform/User/Search/GlobalName/0/"), headers: anyNamed("headers"), body: anyNamed("body"))).thenAnswer((_) async {
       return http.Response(
@@ -1221,33 +1224,35 @@ void main() {
     });
 
     when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Content/Rss/NewsArticles/0", {"includebody": "true", "lc": "fr"}), headers: anyNamed("headers"))).thenAnswer((_) async {
-        return http.Response(
-          '''{
-            "Response": {
-              "CurrentPaginationToken": 0,
-              "NextPaginationToken": 1,
-              "ResultCountThisPage": 25,
-              "NewsArticles": [],
-              "PagerAction": "News"
-            },
-            "ErrorCode": 1,
-            "ThrottleSeconds": 0,
-            "ErrorStatus": "Success",
-            "Message": "Ok",
-            "MessageData": {}
-          }''',
-          200
-        );
+      return http.Response(
+        '''{
+          "Response": {
+            "CurrentPaginationToken": 0,
+            "NextPaginationToken": 1,
+            "ResultCountThisPage": 25,
+            "NewsArticles": [],
+            "PagerAction": "News"
+          },
+          "ErrorCode": 1,
+          "ThrottleSeconds": 0,
+          "ErrorStatus": "Success",
+          "Message": "Ok",
+          "MessageData": {}
+        }''',
+        200
+      );
     });
   });
 
   testWidgets('Manifest Loading', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await tester.pumpWidget(GuardianDock());
 
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 
   testWidgets('Player search build', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await tester.pumpWidget(GuardianDock());
 
     try {
@@ -1256,11 +1261,12 @@ void main() {
       debugDumpRenderTree();
     }
 
-    expect(find.text('View all your statistics on the same platform.'), findsOneWidget);
+    expect(find.textContaining("View all your statistics on the same platform.", findRichText: true), findsOneWidget);
     expect(find.byType(TextField), findsOneWidget);
   });
 
   testWidgets('Player search enter text', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
     await mockNetworkImagesFor(() async {
       await tester.pumpWidget(GuardianDock());
 
@@ -1279,6 +1285,34 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 1000));
 
       expect(find.text("aled"), findsOneWidget);
+    });
+  });
+
+  testWidgets('Bungie Maintenance Error', (WidgetTester tester) async {
+    GetIt.I<ApiClient>().rss.currentPage = 0;
+    await mockNetworkImagesFor(() async {
+      when(client.get(Uri.https(ApiClient.baseUrl, "Platform/Destiny2/Manifest"), headers: anyNamed("headers"))).thenAnswer((_) async {
+        return http.Response(
+          '''{
+            "ErrorCode": 5,
+            "ThrottleSeconds": 0,
+            "ErrorStatus": "SystemDisabled",
+            "Message": "This system is temporarily disabled for maintenance.",
+            "MessageData": {}
+          }''',
+          503
+        );
+      });
+      await tester.pumpWidget(GuardianDock());
+
+      try {
+        await tester.pumpAndSettle();
+      } catch (e) {
+        debugDumpRenderTree();
+      }
+
+      expect(find.byWidgetPredicate((widget) => widget is Icon && widget.icon == Icons.error), findsOneWidget);
+      expect(find.textContaining(RegExp('Unable to load data from Bungie.')), findsOneWidget);
     });
   });
 }

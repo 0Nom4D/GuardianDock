@@ -40,7 +40,9 @@ class ApiClient {
     final path = Uri.https(ApiClient.baseUrl, 'Platform/Destiny2/Manifest');
     final response = await client.get(path, headers: headers);
 
-    if (response.statusCode >= 400) {
+    if (response.statusCode == 503) {
+      throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
+    } else if (response.statusCode >= 400) {
       throw HttpException(response.body);
     }
 

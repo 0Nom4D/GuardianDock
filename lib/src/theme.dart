@@ -32,8 +32,9 @@ const ColorScheme appScheme = ColorScheme(
 
 class AppTheme {
   static final ThemeData defaultTheme = ThemeData(
-      fontFamily: 'NeueHaasDisplay',
-      scaffoldBackgroundColor: appScheme.background,
-      colorScheme: appScheme
+    fontFamily: 'NeueHaasDisplay',
+    scaffoldBackgroundColor: appScheme.background,
+    colorScheme: appScheme,
+    useMaterial3: true
   );
 }
