@@ -81,78 +81,73 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
                 currentFocus.unfocus();
               }
             },
-            child: NotificationListener<ScrollEndNotification>(
-              onNotification: client.rss.isMoreToFetch ? (ScrollEndNotification notif) {
-                return true;
-              } : null,
-              child: CustomScrollView(
-                controller: controller,
-                shrinkWrap: true,
-                slivers: [
-                  SliverAppBar(
-                    backgroundColor: Theme.of(context).colorScheme.background,
-                    toolbarHeight: MediaQuery.of(context).size.height * .05,
-                    collapsedHeight: MediaQuery.of(context).size.height * .05,
-                    expandedHeight: MediaQuery.of(context).size.height * .1,
-                    pinned: true,
-                    elevation: 20,
-                    centerTitle: true,
-                    flexibleSpace: const PersistentSearchBar()
-                  ),
-                  SliverToBoxAdapter(
-                    child: Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Track",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground,
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold
-                          ),
-                          children: [
-                            TextSpan(
-                              text: " your light",
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.tertiary,
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold
-                              ),
-                            )
-                          ]
-                        ),
-                      )
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: MediaQuery.of(context).size.height *.025)
-                  ),
-                  SliverToBoxAdapter(
-                    child: Center(
-                      child: Text(
-                        "View all your statistics on the same platform.",
-                        textAlign: TextAlign.center,
+            child: CustomScrollView(
+              controller: controller,
+              shrinkWrap: true,
+              slivers: [
+                SliverAppBar(
+                  backgroundColor: Theme.of(context).colorScheme.background,
+                  toolbarHeight: MediaQuery.of(context).size.height * .05,
+                  collapsedHeight: MediaQuery.of(context).size.height * .05,
+                  expandedHeight: MediaQuery.of(context).size.height * .1,
+                  pinned: true,
+                  elevation: 20,
+                  centerTitle: true,
+                  flexibleSpace: const PersistentSearchBar()
+                ),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: "Track",
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onBackground,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold
                         ),
-                      )
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: SizedBox(height: MediaQuery.of(context).size.height *.05)
-                  ),
-                  PagedSliverList(
-                    pagingController: pController,
-                    builderDelegate: PagedChildBuilderDelegate<NewsArticle>(
-                      itemBuilder: (BuildContext context, NewsArticle item, int index) => NewsArticleItem(
-                        rssInformation: item
+                        children: [
+                          TextSpan(
+                            text: " your light",
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.tertiary,
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ]
                       ),
-                      animateTransitions: false
                     )
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: MediaQuery.of(context).size.height *.025)
+                ),
+                SliverToBoxAdapter(
+                  child: Center(
+                    child: Text(
+                      "View all your statistics on the same platform.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500
+                      ),
+                    )
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(height: MediaQuery.of(context).size.height *.05)
+                ),
+                PagedSliverList(
+                  pagingController: pController,
+                  builderDelegate: PagedChildBuilderDelegate<NewsArticle>(
+                    itemBuilder: (BuildContext context, NewsArticle item, int index) => NewsArticleItem(
+                      rssInformation: item
+                    ),
+                    animateTransitions: false
                   )
-                ],
-              ),
+                )
+              ],
             ),
           )
         );
