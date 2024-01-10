@@ -62,7 +62,6 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
           textFieldConfiguration: TextFieldConfiguration(
             cursorColor: Theme.of(context).colorScheme.onBackground,
             style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
-            cursorColor: Theme.of(context).colorScheme.onBackground,
             decoration: InputDecoration(
               filled: true,
               hintText: "Bungie ID",
