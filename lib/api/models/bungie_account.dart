@@ -2,16 +2,20 @@ import 'package:guardian_dock/api/models/destiny_membership.dart';
 
 class BungieAccountData {
   String bungieGlobalDisplayName;
-  int bungieGlobalDisplayNameCode;
+  String bungieGlobalDisplayNameCode;
   String bungieNetMembershipId;
   List<DestinyMembership>? memberships;
 
   BungieAccountData({
     required this.bungieGlobalDisplayName,
-    required this.bungieGlobalDisplayNameCode,
+    required int bungieGlobalDisplayNameCode,
     String? bungieMembershipId,
     List<DestinyMembership>? memberships
-  }) : bungieNetMembershipId = bungieMembershipId ?? "", memberships = memberships ?? [];
+  }) :
+      bungieGlobalDisplayNameCode = bungieGlobalDisplayNameCode.toString().padLeft(4, '0'),
+      bungieNetMembershipId = bungieMembershipId ?? "",
+      memberships = memberships ?? []
+    ;
 
   String get fullBungieId => "$bungieGlobalDisplayName#$bungieGlobalDisplayNameCode";
 
@@ -26,7 +30,7 @@ class BungieAccountData {
   BungieAccountData.fromJson(Map<String, dynamic> json)
     :
       bungieGlobalDisplayName = json["bungieGlobalDisplayName"],
-      bungieGlobalDisplayNameCode = json["bungieGlobalDisplayNameCode"],
+      bungieGlobalDisplayNameCode = json["bungieGlobalDisplayNameCode"].toString().padLeft(4, '0'),
       bungieNetMembershipId = json["bungieNetMembershipId"] ?? "",
       memberships = json["destinyMemberships"] != null ? List<DestinyMembership>.from(
         json["destinyMemberships"].map((membership) =>
@@ -37,7 +41,7 @@ class BungieAccountData {
   Map<String, dynamic> toJson() =>
     {
       'bungieGlobalDisplayName': bungieGlobalDisplayName,
-      'bungieGlobalDisplayNameCode': bungieGlobalDisplayNameCode,
+      'bungieGlobalDisplayNameCode': int.parse(bungieGlobalDisplayNameCode),
       'bungieNetMembershipId': bungieNetMembershipId,
       'destinyMemberships': memberships?.map((membership) => membership.toJson()).toList()
     };
