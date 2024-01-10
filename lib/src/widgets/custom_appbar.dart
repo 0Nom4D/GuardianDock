@@ -18,7 +18,7 @@ class GuardianDockAppbar extends StatelessWidget implements PreferredSizeWidget 
       ) : null,
       centerTitle: true,
       title: Text(
-        title ?? "GuardianDock",
+        title ?? "Guardian Dock",
         overflow: TextOverflow.ellipsis,
         style: const TextStyle(fontWeight: FontWeight.bold),
       ),
