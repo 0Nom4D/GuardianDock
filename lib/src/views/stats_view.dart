@@ -23,6 +23,18 @@ class StatView extends StatefulWidget {
 class StatViewState extends State<StatView> {
   final ApiClient client = GetIt.I<ApiClient>();
 
+  IconData getIconForMembership(int applicableMembership) {
+    Map<int, IconData> platformIcons = {
+      1: SimpleIcons.xbox,
+      2: SimpleIcons.playstation,
+      3: SimpleIcons.steam,
+      4: SimpleIcons.activision,
+      5: SimpleIcons.stadia,
+      6: SimpleIcons.epicgames
+    };
+    return platformIcons[applicableMembership] ?? Icons.question_mark;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<ClanData?>(
@@ -48,10 +60,58 @@ class StatViewState extends State<StatView> {
             )
           );
         }
+        final ClanData? userClan = snapshot.data;
+
         return Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Theme.of(context).colorScheme.background,
-          appBar: GuardianDockAppbar(title: widget.bungieAccount.fullBungieId),
+          appBar: const GuardianDockAppbar(title: ""),
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.bungieAccount.bungieGlobalDisplayName,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "NeueHaasDisplay"
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            for (int x = 0; x < widget.bungieAccount.memberships!.length; x++)
+                              ...[
+                                Icon(
+                                  getIconForMembership(widget.bungieAccount.memberships![x].membershipType),
+                                  color: Theme.of(context).colorScheme.onPrimary,
+                                  size: 12,
+                                ),
+                                if (x - 1 != widget.bungieAccount.memberships!.length)
+                                  SizedBox(width: MediaQuery.of(context).size.width * .02)
+                              ]
+                          ],
+                        ),
+                        if (userClan != null)
+                          ...[
+                            SizedBox(width: MediaQuery.of(context).size.width * .02),
+                            Text(userClan.name)
+                          ]
+                      ],
+                    )
+                  ],
+                )
+              ),
+            ],
+          ),
         );
       },
     );
