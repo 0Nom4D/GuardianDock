@@ -27,7 +27,7 @@ void main() {
 
     final accountData = BungieAccountData.fromJson(json);
     expect(accountData.bungieGlobalDisplayName, "ALED");
-    expect(accountData.bungieGlobalDisplayNameCode, 3064);
+    expect(accountData.bungieGlobalDisplayNameCode, "3064");
     expect(accountData.bungieNetMembershipId, "31142636");
 
     expect(accountData.fullBungieId, "ALED#3064");
@@ -58,10 +58,10 @@ void main() {
 
     final accountData = BungieAccountData.fromJson(json);
     expect(accountData.bungieGlobalDisplayName, "A");
-    expect(accountData.bungieGlobalDisplayNameCode, 206);
+    expect(accountData.bungieGlobalDisplayNameCode, "0206");
     expect(accountData.bungieNetMembershipId, "31841225");
 
-    expect(accountData.fullBungieId, "A#206");
+    expect(accountData.fullBungieId, "A#0206");
     expect(accountData.isCrossSavedAccount, false);
     expect(accountData.isNotCrossSavedAccount, false);
     expect(accountData.isSinglePlatformAccount, false);
@@ -93,10 +93,10 @@ void main() {
 
     final accountData = BungieAccountData.fromJson(json);
     expect(accountData.bungieGlobalDisplayName, "A");
-    expect(accountData.bungieGlobalDisplayNameCode, 196);
+    expect(accountData.bungieGlobalDisplayNameCode, "0196");
     expect(accountData.bungieNetMembershipId, "");
 
-    expect(accountData.fullBungieId, "A#196");
+    expect(accountData.fullBungieId, "A#0196");
     expect(accountData.isCrossSavedAccount, false);
     expect(accountData.isNotCrossSavedAccount, false);
     expect(accountData.isSinglePlatformAccount, true);
@@ -114,10 +114,10 @@ void main() {
 
     final accountData = BungieAccountData.fromJson(json);
     expect(accountData.bungieGlobalDisplayName, "A");
-    expect(accountData.bungieGlobalDisplayNameCode, 206);
+    expect(accountData.bungieGlobalDisplayNameCode, "0206");
     expect(accountData.bungieNetMembershipId, "");
 
-    expect(accountData.fullBungieId, "A#206");
+    expect(accountData.fullBungieId, "A#0206");
     expect(accountData.isCrossSavedAccount, false);
     expect(accountData.isNotCrossSavedAccount, false);
     expect(accountData.isSinglePlatformAccount, false);
@@ -134,10 +134,10 @@ void main() {
 
     final accountData = BungieAccountData.fromJson(json);
     expect(accountData.bungieGlobalDisplayName, "A");
-    expect(accountData.bungieGlobalDisplayNameCode, 206);
+    expect(accountData.bungieGlobalDisplayNameCode, "0206");
     expect(accountData.bungieNetMembershipId, "");
 
-    expect(accountData.fullBungieId, "A#206");
+    expect(accountData.fullBungieId, "A#0206");
     expect(accountData.isCrossSavedAccount, false);
     expect(accountData.isNotCrossSavedAccount, false);
     expect(accountData.isSinglePlatformAccount, false);
@@ -152,10 +152,10 @@ void main() {
       bungieGlobalDisplayNameCode: 206
     );
     expect(accountData.bungieGlobalDisplayName, "A");
-    expect(accountData.bungieGlobalDisplayNameCode, 206);
+    expect(accountData.bungieGlobalDisplayNameCode, "0206");
     expect(accountData.bungieNetMembershipId, "");
 
-    expect(accountData.fullBungieId, "A#206");
+    expect(accountData.fullBungieId, "A#0206");
     expect(accountData.isCrossSavedAccount, false);
     expect(accountData.isNotCrossSavedAccount, false);
     expect(accountData.isSinglePlatformAccount, false);

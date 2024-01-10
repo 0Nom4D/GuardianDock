@@ -8,10 +8,14 @@ class BungieAccountData {
 
   BungieAccountData({
     required this.bungieGlobalDisplayName,
-    required this.bungieGlobalDisplayNameCode,
+    required int bungieGlobalDisplayNameCode,
     String? bungieMembershipId,
     List<DestinyMembership>? memberships
-  }) : bungieNetMembershipId = bungieMembershipId ?? "", memberships = memberships ?? [];
+  }) :
+      bungieGlobalDisplayNameCode = bungieGlobalDisplayNameCode.toString().padLeft(4, '0'),
+      bungieNetMembershipId = bungieMembershipId ?? "",
+      memberships = memberships ?? []
+    ;
 
   String get fullBungieId => "$bungieGlobalDisplayName#$bungieGlobalDisplayNameCode";
 
