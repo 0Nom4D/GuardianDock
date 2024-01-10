@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 import 'package:guardian_dock/api/models/manifest/destiny_manifest.dart';
 import 'package:guardian_dock/api/search.dart';
+import 'package:guardian_dock/api/clan.dart';
 import 'package:guardian_dock/api/rss.dart';
 
 class ApiClient {
@@ -15,13 +16,19 @@ class ApiClient {
   String apiKey = const String.fromEnvironment("BNG_API_KEY", defaultValue: r"");
   final http.Client client;
 
+  bool isInMaintenance = false;
+
   late Search _search;
 
   late Rss _rss;
 
+  late Clan _clan;
+
   Search get search => _search;
 
   Rss get rss => _rss;
+
+  Clan get clan => _clan;
 
   Map<String, String> get headers => {'Content-Type': 'application/json', 'X-API-Key': apiKey};
 
@@ -33,6 +40,7 @@ class ApiClient {
     ) : null;
     _search = Search(this);
     _rss = Rss(this);
+    _clan = Clan(this);
   }
 
   Future<void> getManifest() async {
@@ -41,11 +49,14 @@ class ApiClient {
     final response = await client.get(path, headers: headers);
 
     if (response.statusCode == 503) {
+      isInMaintenance = true;
       throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
     } else if (response.statusCode >= 400) {
+      isInMaintenance = false;
       throw HttpException(response.body);
     }
 
+    isInMaintenance = false;
     final jsonManifest = jsonDecode(utf8.decode(response.bodyBytes));
     if (appManifest == null || jsonManifest["Response"]["version"] != appManifest?.version) {
       appManifest = DestinyManifest.fromJson(jsonManifest["Response"]);

@@ -18,10 +18,13 @@ class Search {
     );
 
     if (response.statusCode == 503) {
+      _client.isInMaintenance = true;
       throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
     } else if (response.statusCode >= 400) {
+      _client.isInMaintenance = false;
       throw HttpException(response.body);
     }
+    _client.isInMaintenance = false;
     return List<BungieAccountData>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['searchResults'].map((account) => BungieAccountData.fromJson(account)));
   }
 }

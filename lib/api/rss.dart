@@ -19,10 +19,13 @@ class Rss {
     final response = await _client.client.get(path, headers: _client.headers);
 
     if (response.statusCode == 503) {
+      _client.isInMaintenance = true;
       throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
     } else if (response.statusCode >= 400) {
+      _client.isInMaintenance = false;
       throw HttpException(response.body);
     }
+    _client.isInMaintenance = false;
     if (jsonDecode(utf8.decode(response.bodyBytes))['Response']['NewsArticles'] == null) {
       isMoreToFetch = false;
       return [];

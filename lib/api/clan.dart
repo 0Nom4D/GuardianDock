@@ -22,10 +22,13 @@ class Clan {
     );
 
     if (response.statusCode == 503) {
+      _client.isInMaintenance = true;
       throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
     } else if (response.statusCode >= 400) {
+      _client.isInMaintenance = false;
       throw HttpException(response.body);
     }
+    _client.isInMaintenance = false;
     final List<Map<String, dynamic>> json = List<Map<String, dynamic>>.from(jsonDecode(utf8.decode(response.bodyBytes))['Response']['results']);
     if (json.isEmpty) {
       return null;
