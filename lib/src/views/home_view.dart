@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
         }
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: const GuardianDockAppbar(),
           body: GestureDetector(
             onTap: () {
@@ -86,7 +86,7 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
               shrinkWrap: true,
               slivers: [
                 SliverAppBar(
-                  backgroundColor: Theme.of(context).colorScheme.background,
+                  backgroundColor: Theme.of(context).colorScheme.surface,
                   toolbarHeight: MediaQuery.of(context).size.height * .05,
                   collapsedHeight: MediaQuery.of(context).size.height * .05,
                   expandedHeight: MediaQuery.of(context).size.height * .1,
@@ -101,7 +101,7 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
                       text: TextSpan(
                         text: "Track",
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.onBackground,
+                          color: Theme.of(context).colorScheme.onSurface,
                           fontSize: 35,
                           fontWeight: FontWeight.bold
                         ),
@@ -128,7 +128,7 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
                       "View all your statistics on the same platform.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground,
+                        color: Theme.of(context).colorScheme.onSurface,
                         fontSize: 20,
                         fontWeight: FontWeight.w500
                       ),

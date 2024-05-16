@@ -31,8 +31,8 @@ class AccountSuggestionTile extends StatelessWidget {
         ).toString()
       ),
       title: Text(relatedAccount.fullBungieId),
-      tileColor: Theme.of(context).colorScheme.background,
-      textColor: Theme.of(context).colorScheme.onBackground
+      tileColor: Theme.of(context).colorScheme.surface,
+      textColor: Theme.of(context).colorScheme.onSurface
     );
   }
 }

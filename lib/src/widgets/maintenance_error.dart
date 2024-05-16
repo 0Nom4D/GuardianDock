@@ -49,15 +49,16 @@ class MaintenanceError extends StatelessWidget {
                         );
                       });
                     },
-                    label: Text("@BungieHelp",
+                    label: Text(
+                      "@BungieHelp",
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground
+                        color: Theme.of(context).colorScheme.onSurface
                       ),
                     ),
                     icon: Icon(
                       size: 20,
                       SimpleIcons.x,
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.error.withOpacity(.35)
@@ -67,15 +68,16 @@ class MaintenanceError extends StatelessWidget {
                 Flexible(
                   child: ElevatedButton.icon(
                     onPressed: onReload,
-                    label: Text("Reload",
+                    label: Text(
+                      "Reload",
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onBackground
+                        color: Theme.of(context).colorScheme.onSurface
                       ),
                     ),
                     icon: Icon(
                       size: 20,
                       Icons.refresh,
-                      color: Theme.of(context).colorScheme.onBackground,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Theme.of(context).colorScheme.error.withOpacity(.35)

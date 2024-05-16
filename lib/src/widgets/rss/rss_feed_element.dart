@@ -47,7 +47,7 @@ class NewsArticleItem extends StatelessWidget {
             Positioned.fill(
               child: ListTile(
                 tileColor: Theme.of(context).colorScheme.primary,
-                textColor: Theme.of(context).colorScheme.onBackground,
+                textColor: Theme.of(context).colorScheme.onSurface,
                 trailing: Text(
                   DateFormat('yyyy-MM-dd').format(rssInformation.pubDate),
                   style: const TextStyle(

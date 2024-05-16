@@ -19,13 +19,12 @@ const ColorScheme appScheme = ColorScheme(
     primary: destinyDarkNavyBlue,
     secondary: destinyDarkGrey,
     tertiary: destinyYellowLight,
-    background: destinyDarkGrey,
     brightness: Brightness.light,
     onError: dangerColor,
     error: dangerColor,
     onPrimary: destinyClearGrey,
     onSecondary: destinyClearGrey,
-    onBackground: destinyClearGrey,
+    onSurfaceVariant: destinyClearGrey,
     surface: destinyDarkNavyBlue,
     onSurface: destinyClearGrey
 );
@@ -33,7 +32,7 @@ const ColorScheme appScheme = ColorScheme(
 class AppTheme {
   static final ThemeData defaultTheme = ThemeData(
     fontFamily: 'NeueHaasDisplay',
-    scaffoldBackgroundColor: appScheme.background,
+    scaffoldBackgroundColor: appScheme.surface,
     colorScheme: appScheme,
     useMaterial3: true
   );
