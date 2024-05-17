@@ -1,6 +1,6 @@
 name: Flutter MultiPlatform Build
 
-on: [ push, pull_request, workflow_dispatch ]
+on: [ pull_request, workflow_dispatch ]
 
 jobs:
   build:
@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Flutter Install
-        uses: subosito/flutter-action@v2.10.0
+        uses: subosito/flutter-action@v2.16.0
         with:
           channel: 'stable'
           architecture: x64
@@ -29,7 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Flutter Install
-        uses: subosito/flutter-action@v2.10.0
+        uses: subosito/flutter-action@v2.16.0
         with:
           channel: 'stable'
           architecture: x64
