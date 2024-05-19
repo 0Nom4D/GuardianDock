@@ -7,8 +7,8 @@ class EmptySuggestionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: const Text("No Items Found!"),
-      tileColor: Theme.of(context).colorScheme.background,
-      textColor: Theme.of(context).colorScheme.onBackground
+      tileColor: Theme.of(context).colorScheme.surface,
+      textColor: Theme.of(context).colorScheme.onSurface
     );
   }
 }

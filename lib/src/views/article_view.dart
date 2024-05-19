@@ -15,7 +15,7 @@ class ArticleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: GuardianDockAppbar(title: article.title),
       body: CustomScrollView(
         slivers: [
@@ -31,12 +31,12 @@ class ArticleView extends StatelessWidget {
                     return { 'color': "#${Theme.of(context).colorScheme.tertiary.value.toRadixString(16).substring(2)}" };
                   }
                   if (element.outerHtml.startsWith("<td")) {
-                    return { 'border': "1px dotted #${Theme.of(context).colorScheme.onBackground.value.toRadixString(16).substring(2)}" };
+                    return { 'border': "1px dotted #${Theme.of(context).colorScheme.onSurface.value.toRadixString(16).substring(2)}" };
                   }
 
                   return null;
                 },
-                textStyle: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+                textStyle: TextStyle(color: Theme.of(context).colorScheme.onSurface),
               ),
             ),
           ),

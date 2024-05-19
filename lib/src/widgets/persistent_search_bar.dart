@@ -20,8 +20,6 @@ class PersistentSearchBar extends StatefulWidget {
 }
 
 class _PersistentSearchBarState extends State<PersistentSearchBar> {
-  final TextEditingController _dropdownSearchFieldController = TextEditingController();
-
   List<BungieAccountData> lastFetchedAccounts = [];
 
   Future<List<BungieAccountData>> getPossibleBungieAccounts(String bungieName) async {
@@ -53,29 +51,30 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
         child: TypeAheadField<BungieAccountData>(
           hideOnEmpty: true,
           hideOnLoading: true,
-          minCharsForSuggestions: 2,
-          keepSuggestionsOnLoading: false,
-          suggestionsBoxDecoration: SuggestionsBoxDecoration(
-            color: Theme.of(context).colorScheme.background
+          retainOnLoading: false,
+          decorationBuilder: (context, widget) => Material(
+            color: Theme.of(context).colorScheme.surface,
+            child: widget,
           ),
-          textFieldConfiguration: TextFieldConfiguration(
-            cursorColor: Theme.of(context).colorScheme.onBackground,
-            style: TextStyle(color: Theme.of(context).colorScheme.onBackground),
+          builder: (context, controller, focusNode) => TextField(
+            controller: controller,
+            focusNode: focusNode,
+            cursorColor: Theme.of(context).colorScheme.onSurface,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
             decoration: InputDecoration(
               filled: true,
               hintText: "Bungie ID",
-              fillColor: Theme.of(context).colorScheme.background,
+              fillColor: Theme.of(context).colorScheme.surface,
               hintStyle: TextStyle(
-                color: Theme.of(context).colorScheme.onBackground.withOpacity(.3)
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(.3)
               ),
             ),
-            controller: _dropdownSearchFieldController,
           ),
           suggestionsCallback: (String search) async {
             lastFetchedAccounts = await getPossibleBungieAccounts(search);
             return lastFetchedAccounts;
           },
-          noItemsFoundBuilder: (context) => const EmptySuggestionTile(),
+          emptyBuilder: (context) => const EmptySuggestionTile(),
           itemBuilder: (context, suggestion) {
             if (suggestion.memberships!.isEmpty) {
               return Container();
@@ -84,9 +83,9 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
           },
           itemSeparatorBuilder: (context, index) => Divider(
             height: 1,
-            color: Theme.of(context).colorScheme.onBackground.withOpacity(.15)
+            color: Theme.of(context).colorScheme.onSurface.withOpacity(.15)
           ),
-          onSuggestionSelected: (suggestion) {},
+          onSelected: (BungieAccountData value) {},
         ),
       ),
     );

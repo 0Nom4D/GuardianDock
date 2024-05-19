@@ -13,7 +13,7 @@ class GuardianDockAppbar extends StatelessWidget implements PreferredSizeWidget 
       elevation: 2.0,
       backgroundColor: Colors.transparent,
       leading: GoRouter.of(context).canPop() ? BackButton(
-        color: Theme.of(context).colorScheme.onBackground,
+        color: Theme.of(context).colorScheme.onSurface,
         onPressed: () => GoRouter.of(context).pop()
       ) : null,
       centerTitle: true,
@@ -29,7 +29,7 @@ class GuardianDockAppbar extends StatelessWidget implements PreferredSizeWidget 
             tooltip: "Link a Bungie account",
             icon: Icon(
               Icons.link,
-              color: Theme.of(context).colorScheme.onBackground
+              color: Theme.of(context).colorScheme.onSurface
             )
           )
       ],
