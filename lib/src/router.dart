@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:guardian_dock/api/models/bungie_account.dart';
 
 import 'package:guardian_dock/api/models/news_article.dart';
 import 'package:guardian_dock/src/views/article_view.dart';
@@ -37,10 +38,10 @@ final mainRoutes = [
   GoRoute(
     path: '/stats/:bungieId',
     pageBuilder: (context, state) {
-      int bungieId = int.parse(state.pathParameters['bungieId']!);
+      BungieAccountData playerBungieAccount = state.extra as BungieAccountData;
 
       return CustomTransitionPage(
-        child: Text(bungieId.toString()),
+        child: Text(playerBungieAccount.fullBungieId),
         transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget? widget) => SlideTransition(
           position: animation.drive(
             Tween<Offset>(

@@ -87,7 +87,9 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
             color: Theme.of(context).colorScheme.onSurface.withOpacity(.15)
           ),
           onSelected: (BungieAccountData value) {
-            GoRouter.of(context).push('/stats/${value.bungieNetMembershipId}');
+            GoRouter
+                .of(context)
+                .push('/stats/${value.bungieNetMembershipId}', extra: value);
           },
         ),
       ),
