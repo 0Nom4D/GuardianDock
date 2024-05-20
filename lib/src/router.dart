@@ -33,5 +33,24 @@ final mainRoutes = [
         )
       );
     }
+  ),
+  GoRoute(
+    path: '/stats/:bungieId',
+    pageBuilder: (context, state) {
+      int bungieId = int.parse(state.pathParameters['bungieId']!);
+
+      return CustomTransitionPage(
+        child: Text(bungieId.toString()),
+        transitionsBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget? widget) => SlideTransition(
+          position: animation.drive(
+            Tween<Offset>(
+              begin: const Offset(1.0, 0.0),
+              end: Offset.zero
+            ).chain(CurveTween(curve: Curves.ease))
+          ),
+          child: widget
+        )
+      );
+    }
   )
 ];
