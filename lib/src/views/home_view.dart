@@ -88,10 +88,12 @@ class _HomeViewState extends State<HomeView> implements AutomaticKeepAliveClient
                 SliverAppBar(
                   backgroundColor: Theme.of(context).colorScheme.surface,
                   toolbarHeight: MediaQuery.of(context).size.height * .05,
-                  collapsedHeight: MediaQuery.of(context).size.height * .05,
-                  expandedHeight: MediaQuery.of(context).size.height * .1,
+                  collapsedHeight: MediaQuery.of(context).size.height * .075,
+                  expandedHeight: MediaQuery.of(context).size.height * .15,
                   pinned: true,
-                  elevation: 20,
+                  elevation: 5,
+                  scrolledUnderElevation: 5,
+                  forceElevated: true,
                   centerTitle: true,
                   flexibleSpace: const PersistentSearchBar()
                 ),
