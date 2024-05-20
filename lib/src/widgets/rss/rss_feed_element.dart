@@ -27,13 +27,15 @@ class NewsArticleItem extends StatelessWidget {
               ),
               child: ShaderMask(
                 shaderCallback: (Rect bounds) => LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
-                    Colors.transparent,
-                    Theme.of(context).colorScheme.primary.withOpacity(.25),
+                    Theme.of(context).colorScheme.primary.withOpacity(.75),
                     Theme.of(context).colorScheme.primary.withOpacity(.5),
-                    Theme.of(context).colorScheme.primary.withOpacity(.75)
+                    Theme.of(context).colorScheme.primary.withOpacity(.25),
+                    Colors.transparent
                   ],
-                  stops: const [.0, .05, .25, .65]
+                  stops: const [0.0, 0.75, 0.95, 1]
                 ).createShader(bounds),
                 blendMode: BlendMode.srcATop,
                 child: Image.network(
