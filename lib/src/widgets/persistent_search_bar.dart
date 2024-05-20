@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:guardian_dock/src/widgets/account_suggestion_tile.dart';
 import 'package:guardian_dock/src/widgets/empty_suggestion_tile.dart';
@@ -85,7 +86,9 @@ class _PersistentSearchBarState extends State<PersistentSearchBar> {
             height: 1,
             color: Theme.of(context).colorScheme.onSurface.withOpacity(.15)
           ),
-          onSelected: (BungieAccountData value) {},
+          onSelected: (BungieAccountData value) {
+            GoRouter.of(context).push('/stats/${value.bungieNetMembershipId}');
+          },
         ),
       ),
     );
