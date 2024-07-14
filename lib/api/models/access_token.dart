@@ -15,6 +15,8 @@ class AccessToken {
     required this.membershipId
   });
 
+  Map<String, String> get authorizationHeader => { "Authorization": "Bearer $accessToken" };
+
   bool isExpired() {
     return DateTime.now().isAfter(grantedAt.add(Duration(seconds: expiresIn)));
   }
