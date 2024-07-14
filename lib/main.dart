@@ -15,7 +15,7 @@ import 'package:guardian_dock/src/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final storage = GetIt.I.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
-  GetIt.I.registerSingleton<ApiClient>(
+  final apiClient = GetIt.I.registerSingleton<ApiClient>(
     ApiClient(
       accessTokens: (await storage.read(key: 'access')),// tokens != null ? AccessToken.fromJson(jsonDecode(tokens)) : null,
       manifest: (await storage.read(key: 'manifest')),
@@ -25,6 +25,10 @@ void main() async {
       }
     )
   );
+
+  if (apiClient.authorizationTokens == null) {
+    await storage.delete(key: 'access');
+  }
   runApp(GuardianDock());
 }
 

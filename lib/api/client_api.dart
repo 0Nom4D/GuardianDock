@@ -39,9 +39,8 @@ class ApiClient {
   DestinyManifest? appManifest;
 
   ApiClient({this.callbackJwt, String? accessTokens, String? manifest, http.Client? client}) : client = client ?? http.Client() {
-    authorizationTokens = accessTokens != null ? AccessToken.fromJson(
-        jsonDecode(accessTokens)
-    ) : null;
+    final accessToken = accessTokens != null ? AccessToken.fromJson(jsonDecode(accessTokens)) : null;
+    authorizationTokens = accessToken != null && !accessToken.isExpired() ? accessToken : null;
     appManifest = manifest != null ? DestinyManifest.fromJson(
       jsonDecode(manifest)
     ) : null;
