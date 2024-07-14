@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
+import 'package:get_it/get_it.dart';
 import 'package:guardian_dock/api/client_api.dart';
 import 'package:guardian_dock/api/models/access_token.dart';
 
@@ -65,5 +67,12 @@ class OAuth {
     if (_client.callbackJwt != null) {
       _client.callbackJwt!(accessTokens);
     }
+  }
+
+  Future<void> closeSession() async {
+    final storage = GetIt.I<FlutterSecureStorage>();
+
+    await storage.delete(key: 'access');
+    _client.authorizationTokens = null;
   }
 }

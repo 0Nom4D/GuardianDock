@@ -21,6 +21,7 @@ class _GuardianDockAppbarState extends State<GuardianDockAppbar> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(client.authorizationTokens?.accessToken);
     return AppBar(
       elevation: 2.0,
       backgroundColor: Colors.transparent,
@@ -37,24 +38,53 @@ class _GuardianDockAppbarState extends State<GuardianDockAppbar> {
       actions: [
         if (GoRouterState.of(context).path! == '/')
           if (client.authorizationTokens == null) ...{
-            IconButton(
-              onPressed: () async {
-                await client.oauth.connectUserWithOAuth2();
-                setState(() {});
-              },
-              tooltip: "Link a Bungie account",
-              icon: Icon(
-                Icons.link,
-                color: Theme.of(context).colorScheme.onSurface
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: IconButton(
+                onPressed: () async {
+                  await client.oauth.connectUserWithOAuth2();
+                  setState(() {});
+                },
+                tooltip: "Link a Bungie account",
+                icon: Icon(
+                  Icons.link,
+                  color: Theme.of(context).colorScheme.onSurface
+                )
               )
             )
           } else ...{
-            // TODO Bien gérer l'affichage de la photo de profile du compte Bungie
-            CircleAvatar(
-              radius: 10,
-              child: Image.network(
-                Uri.https(ApiClient.baseUrl, '/img/profile/avatars/cc00009.jpg').toString()
-              ),
+            Padding(
+              padding: const EdgeInsets.only(right: 15),
+              child: MenuAnchor(
+                builder: (BuildContext context, MenuController controller, Widget? child) {
+                  return GestureDetector(
+                    child: ClipOval(
+                      child: SizedBox.fromSize(
+                        size: const Size.fromRadius(17.5),
+                        child: Image.network(
+                            Uri.https(ApiClient.baseUrl, '/img/profile/avatars/cc00009.jpg').toString()
+                        ),
+                      )
+                    ),
+                    onTap: () {
+                      if (controller.isOpen) {
+                        controller.close();
+                      } else {
+                        controller.open();
+                      }
+                    },
+                  );
+                },
+                menuChildren: List<MenuItemButton>.generate(
+                  1, (int index) => MenuItemButton(
+                    onPressed: () async {
+                      client.oauth.closeSession();
+                      setState(() {});
+                    },
+                    child: const Text("Se déconnecter")
+                  )
+                ),
+              )
             )
           }
       ],
