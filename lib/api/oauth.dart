@@ -5,11 +5,15 @@ import 'dart:math';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:get_it/get_it.dart';
-import 'package:guardian_dock/api/client_api.dart';
+
 import 'package:guardian_dock/api/models/access_token.dart';
+import 'package:guardian_dock/api/models/bungie_user.dart';
+import 'package:guardian_dock/api/client_api.dart';
 
 class OAuth {
   final ApiClient _client;
+
+  BungieUser? currentSessionUser;
 
   OAuth(ApiClient client) : _client = client;
 
@@ -26,7 +30,7 @@ class OAuth {
 
   Future<String?> _getAuthorizationCode() async {
     final oAuthState = _generateOAuth2StateString();
-    final oAuthUri = Uri.https('www.bungie.net', '/fr/OAuth/Authorize', {
+    final oAuthUri = Uri.https(ApiClient.baseUrl, '/fr/OAuth/Authorize', {
       'response_type': 'code',
       'client_id': _client.bungieClientId,
       'redirect_uri': 'guardiandock:/oauth/callback',
@@ -47,7 +51,7 @@ class OAuth {
     }
 
     final response = await _client.client.post(
-      Uri.https('www.bungie.net', 'Platform/App/OAuth/Token/'),
+      Uri.https(ApiClient.baseUrl, 'Platform/App/OAuth/Token/'),
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: {
         'grant_type': 'authorization_code',
@@ -67,6 +71,26 @@ class OAuth {
     if (_client.callbackJwt != null) {
       _client.callbackJwt!(accessTokens);
     }
+    getCurrentSessionUser();
+  }
+
+  Future<void> getCurrentSessionUser() async {
+    final response = await _client.client.get(
+      Uri.https(ApiClient.baseUrl, '/Platform/User/GetCurrentBungieNetUser'),
+      headers: { ..._client.headers, ...?_client.authorizationTokens?.authorizationHeader }
+    );
+
+    if (response.statusCode == 503) {
+      throw const HttpException("Unable to load data from Bungie. Bungie.net servers are down for maintenance.");
+    } else if (response.statusCode >= 400) {
+      throw HttpException(response.body);
+    }
+
+    final bungieUser = BungieUser.fromJson(jsonDecode(utf8.decode(response.bodyBytes))["Response"]);
+    if (bungieUser.isDeleted) {
+      return;
+    }
+    currentSessionUser = bungieUser;
   }
 
   Future<void> closeSession() async {
@@ -74,5 +98,6 @@ class OAuth {
 
     await storage.delete(key: 'access');
     _client.authorizationTokens = null;
+    currentSessionUser = null;
   }
 }

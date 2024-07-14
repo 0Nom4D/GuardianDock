@@ -19,9 +19,10 @@ class GuardianDockAppbar extends StatefulWidget implements PreferredSizeWidget {
 class _GuardianDockAppbarState extends State<GuardianDockAppbar> {
   final client = GetIt.I<ApiClient>();
 
+  Future<void> getCurrentSessionUserIfNeeded() async => await client.oauth.getCurrentSessionUser();
+
   @override
   Widget build(BuildContext context) {
-    debugPrint(client.authorizationTokens?.accessToken);
     return AppBar(
       elevation: 2.0,
       backgroundColor: Colors.transparent,
@@ -53,38 +54,59 @@ class _GuardianDockAppbarState extends State<GuardianDockAppbar> {
               )
             )
           } else ...{
-            Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: MenuAnchor(
-                builder: (BuildContext context, MenuController controller, Widget? child) {
-                  return GestureDetector(
-                    child: ClipOval(
-                      child: SizedBox.fromSize(
-                        size: const Size.fromRadius(17.5),
-                        child: Image.network(
-                            Uri.https(ApiClient.baseUrl, '/img/profile/avatars/cc00009.jpg').toString()
-                        ),
-                      )
-                    ),
-                    onTap: () {
-                      if (controller.isOpen) {
-                        controller.close();
+            FutureBuilder(
+              future: client.oauth.currentSessionUser == null
+                  ? getCurrentSessionUserIfNeeded()
+                  : null,
+              builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: MenuAnchor(
+                    builder: (BuildContext context, MenuController controller, Widget? child) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return GestureDetector(
+                          child: ClipOval(
+                            child: SizedBox.fromSize(
+                              size: const Size.fromRadius(17.5),
+                              child: Image.network(
+                                Uri.https(
+                                  ApiClient.baseUrl,
+                                  client.oauth.currentSessionUser!.profilePicturePath
+                                ).toString()
+                              ),
+                            )
+                          ),
+                          onTap: () {
+                            if (controller.isOpen) {
+                              controller.close();
+                            } else {
+                              controller.open();
+                            }
+                          },
+                        );
                       } else {
-                        controller.open();
+                        return CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.tertiary
+                        );
                       }
                     },
-                  );
-                },
-                menuChildren: List<MenuItemButton>.generate(
-                  1, (int index) => MenuItemButton(
-                    onPressed: () async {
-                      client.oauth.closeSession();
-                      setState(() {});
-                    },
-                    child: const Text("Se déconnecter")
+                    menuChildren: <MenuItemButton>[
+                      if (snapshot.connectionState == ConnectionState.done)
+                        MenuItemButton(
+                          closeOnActivate: false,
+                          child: Text(client.oauth.currentSessionUser!.displayName),
+                        ),
+                      MenuItemButton(
+                        onPressed: () async {
+                          client.oauth.closeSession();
+                          setState(() {});
+                        },
+                        child: const Text("Se déconnecter")
+                      )
+                    ],
                   )
-                ),
-              )
+                );
+              },
             )
           }
       ],
